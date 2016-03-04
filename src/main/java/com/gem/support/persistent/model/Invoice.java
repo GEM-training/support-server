@@ -15,12 +15,12 @@ import java.util.Date;
 public class Invoice {
 
     @Id
-    @Column(name = "id", nullable = false, unique = true, columnDefinition = "UUID")
+    @Column(name = "id", nullable = false, unique = true)
     @GenericGenerator(name = "guid_generator", strategy = "uuid2")
     @GeneratedValue(generator = "guid_generator")
     private String id;
 
-    @Column(name = "company_id", nullable = false, columnDefinition = "UUID")
+    @Column(name = "company_id", nullable = false)
     private String companyId;
 
     @Column(name = "num_of_user", nullable = false)

@@ -26,6 +26,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public void create(InvoiceDTO invoiceDTO) {
         Invoice invoice = new Invoice();
         BeanUtils.copyProperties(invoiceDTO, invoice);
+        invoice.setIssuedDate(new Date());
         invoiceRepository.save(invoice);
     }
 
