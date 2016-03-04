@@ -8,7 +8,7 @@ import java.util.Date;
 public class Subscription {
 
     @Id
-    @Column(name = "company_id", nullable = false, unique = true)
+    @Column(name = "company_id", nullable = false, unique = true, columnDefinition = "UUID")
     private String companyId;
 
     @ManyToOne
