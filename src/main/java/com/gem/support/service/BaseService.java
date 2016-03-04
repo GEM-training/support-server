@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import java.io.Serializable;
 
 public interface BaseService<DTO, ID extends Serializable> {
-
     void create(DTO dto);
     void update(DTO dto);
     void delete(ID id);

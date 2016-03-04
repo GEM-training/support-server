@@ -8,26 +8,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
 
-@Entity
+/**
+ * Model class for table invoice
+ */
+@Entity(name = "invoice")
 public class Invoice {
 
     @Id
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(name = "id", nullable = false, unique = true, columnDefinition = "UUID")
     @GenericGenerator(name = "guid_generator", strategy = "uuid2")
     @GeneratedValue(generator = "guid_generator")
     private String id;
 
-    @Column(name = "company_id", nullable = false)
+    @Column(name = "company_id", nullable = false, columnDefinition = "UUID")
     private String companyId;
 
     @Column(name = "num_of_user", nullable = false)
-    private int numOfUser;
+    private int numOfUser = 0;
 
     @Column(name = "fee_per_user", nullable = false)
-    private double feePerUser;
+    private double feePerUser = 0;
 
     @Column(name = "issued_date", nullable = false)
-    private Date issuedDate;
+    private Date issuedDate = new Date();
 
     @Column(name = "payment_date")
     private Date paymentDate;
@@ -37,6 +40,7 @@ public class Invoice {
 
     @Column(name = "payment_instrument")
     private String paymentInstrument;
+
 
     public String getId() {
         return id;
