@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -28,7 +25,12 @@ public class InvoiceController {
             @RequestParam(name = "from", required = false) @DateTimeFormat(pattern = "yyyy-mm") Date from,
             @RequestParam(name = "to", required = false) @DateTimeFormat(pattern = "yyyy-mm") Date to,
             Pageable pageable) {
-        return invoiceService.find(companyId,from, to, pageable);
+        return invoiceService.find(companyId, from, to, pageable);
+    }
+
+    @RequestMapping(value = "/{invoiceId}", method = RequestMethod.GET, produces = "application/json")
+    public InvoiceDTO findOne(@PathVariable(value = "invoiceId") String invoiceId){
+        return invoiceService.findOne(invoiceId);
     }
 
 
