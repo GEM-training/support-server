@@ -5,7 +5,7 @@ import com.gem.support.persistent.model.QInvoice;
 import com.gem.support.persistent.repository.InvoiceRepository;
 import com.gem.support.service.InvoiceService;
 import com.gem.support.service.dto.InvoiceDTO;
-import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,9 +60,16 @@ public class InvoiceServiceImpl implements InvoiceService {
         });
     }
 
+
     @Override
-    public Page<InvoiceDTO> findByTime(Date from, Date to, Pageable pageable) {
-        Predicate predicate = QInvoice.invoice.issuedDate.between(from, to);
+    public Page<InvoiceDTO> find(String companyId, Date from, Date to, Pageable pageable) {
+        BooleanExpression predicate = null;
+        if(companyId != null) {
+            predicate = QInvoice.invoice.companyId.eq(companyId);
+        }
+        predicate = predicate == null ? QInvoice.invoice.issuedDate.between(from, to) :
+                predicate.and(QInvoice.invoice.issuedDate.between(from, to));
+
         return invoiceRepository.findAll(predicate, pageable).map(source -> {
             InvoiceDTO dto = new InvoiceDTO();
             BeanUtils.copyProperties(source, dto);
