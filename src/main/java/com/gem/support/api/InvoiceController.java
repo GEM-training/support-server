@@ -33,6 +33,9 @@ public class InvoiceController {
         return invoiceService.findOne(invoiceId);
     }
 
-
+    @RequestMapping(value = "", method = RequestMethod.POST, consumes = "application/json")
+    public void create(@RequestBody InvoiceDTO dto) {
+        invoiceService.create(dto);
+    }
 
 }
