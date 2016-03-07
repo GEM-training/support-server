@@ -6,11 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.UUID;
 
-/**
- * Created by vanhop on 3/4/16.
- */
 @Entity
 @Table(name = "feedback")
 public class Feedback {
