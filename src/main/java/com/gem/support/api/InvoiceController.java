@@ -22,8 +22,8 @@ public class InvoiceController {
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public Page<InvoiceDTO> findByTime(
             @RequestParam(name = "companyId", required = false) String companyId,
-            @RequestParam(name = "from", required = false) @DateTimeFormat(pattern = "yyyy-mm") Date from,
-            @RequestParam(name = "to", required = false) @DateTimeFormat(pattern = "yyyy-mm") Date to,
+            @RequestParam(name = "from", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
+            @RequestParam(name = "to", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
             Pageable pageable) {
         return invoiceService.find(companyId, from, to, pageable);
     }
