@@ -27,6 +27,6 @@ public class InvoiceRepositoryImpl implements InvoiceRepositoryCustom {
         if(invoice2 != null) {
             return invoice1.getNumOfUser() - invoice2.getNumOfUser();
         }
-        return 0;
+        return invoice1.getNumOfUser();
     }
 }
