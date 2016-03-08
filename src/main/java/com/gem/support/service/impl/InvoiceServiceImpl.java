@@ -18,7 +18,7 @@ import java.util.Date;
 
 @Service
 @Transactional
-public class invoiceServiceImpl implements InvoiceService {
+public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired
     private InvoiceRepository invoiceRepository;
