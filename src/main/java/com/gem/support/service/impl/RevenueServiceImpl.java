@@ -4,6 +4,7 @@ import com.gem.support.persistent.model.Invoice;
 import com.gem.support.persistent.model.QInvoice;
 import com.gem.support.persistent.repository.InvoiceRepository;
 import com.gem.support.service.RevenueService;
+import com.gem.support.service.dto.RevenueDTO;
 import com.mysema.query.types.expr.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,11 @@ public class RevenueServiceImpl implements RevenueService {
     @Autowired
     InvoiceRepository invoiceRepository;
 
+    @Autowired
+    RevenueDTO revenueDTO;
+
     @Override
-    public Double getRevenue(String companyId, Date from, Date to) {
+    public RevenueDTO getRevenue(String companyId, Date from, Date to) {
         BooleanExpression predicate  = QInvoice.invoice.isNotNull();
         if(companyId != null) {
             predicate = predicate.and(QInvoice.invoice.companyId.eq(companyId));
@@ -39,9 +43,8 @@ public class RevenueServiceImpl implements RevenueService {
             sumRevenue+= invoice.getFeePerUser() * invoice.getNumOfUser();
         }
 
-        return sumRevenue;
+        RevenueDTO dto = new RevenueDTO();
+        dto.setTotalRevenue(sumRevenue);
+        return dto;
     }
-
-
-
 }
