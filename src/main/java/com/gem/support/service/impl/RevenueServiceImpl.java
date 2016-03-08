@@ -21,8 +21,7 @@ public class RevenueServiceImpl implements RevenueService {
     @Autowired
     InvoiceRepository invoiceRepository;
 
-    @Autowired
-    RevenueDTO revenueDTO;
+
 
     @Override
     public RevenueDTO getRevenue(String companyId, Date from, Date to) {
