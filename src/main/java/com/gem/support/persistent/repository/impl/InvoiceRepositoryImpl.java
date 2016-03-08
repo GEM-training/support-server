@@ -20,13 +20,14 @@ public class InvoiceRepositoryImpl implements InvoiceRepositoryCustom {
 
     @Override
     public int getUserIncrement(String invoiceId) {
-        JPQLQuery query = new HibernateQuery(sessionFactory.getCurrentSession());
-        Invoice invoice1 = query.from(QInvoice.invoice).where(QInvoice.invoice.id.eq(invoiceId)).uniqueResult(QInvoice.invoice);
-        Invoice invoice2 = query.from(QInvoice.invoice).where(QInvoice.invoice.issuedDate.before(invoice1.getIssuedDate()))
+        JPQLQuery query1 = new HibernateQuery(sessionFactory.getCurrentSession());
+        Invoice invoice1 = query1.from(QInvoice.invoice).where(QInvoice.invoice.id.eq(invoiceId)).uniqueResult(QInvoice.invoice);
+        JPQLQuery query2 = new HibernateQuery(sessionFactory.getCurrentSession());
+        Invoice invoice2 = query2.from(QInvoice.invoice).where(QInvoice.invoice.issuedDate.before(invoice1.getIssuedDate()))
                 .limit(1).uniqueResult(QInvoice.invoice);
         if(invoice2 != null) {
             return invoice1.getNumOfUser() - invoice2.getNumOfUser();
         }
-        return 0;
+        return invoice1.getNumOfUser();
     }
 }

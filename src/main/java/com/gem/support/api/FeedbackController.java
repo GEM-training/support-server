@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Created by vanhop on 3/4/16.
- */
 @RestController
 @RequestMapping("/feedback")
 public class FeedbackController {
