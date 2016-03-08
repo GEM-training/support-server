@@ -44,6 +44,9 @@ public class RevenueServiceImpl implements RevenueService {
 
         RevenueDTO dto = new RevenueDTO();
         dto.setTotalRevenue(sumRevenue);
+        dto.setFrom(from);
+        dto.setCompanyId(companyId);
+        dto.setTo(to);
         return dto;
     }
 }
