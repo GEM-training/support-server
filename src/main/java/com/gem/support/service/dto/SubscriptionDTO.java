@@ -1,13 +1,13 @@
 package com.gem.support.service.dto;
 
-import com.gem.support.persistent.model.SubscriptionType;
-
 import java.util.Date;
 
 public class SubscriptionDTO {
     private String companyId;
-    private SubscriptionType subscriptionType;
+    private String subscriptionType;
     private Date startDate;
+    private Date expirationDate;
+    private double chargedAmount;
 
     public String getCompanyId() {
         return companyId;
@@ -17,19 +17,39 @@ public class SubscriptionDTO {
         this.companyId = companyId;
     }
 
-    public SubscriptionType getSubscriptionType() {
-        return subscriptionType;
-    }
-
-    public void setSubscriptionType(SubscriptionType subscriptionType) {
-        this.subscriptionType = subscriptionType;
-    }
-
     public Date getStartDate() {
         return startDate;
     }
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public Double getChargedAmount() {
+        return chargedAmount;
+    }
+
+    public void setChargedAmount(Double chargedAmount) {
+        this.chargedAmount = chargedAmount;
+    }
+
+    public void setChargedAmount(double chargedAmount) {
+        this.chargedAmount = chargedAmount;
+    }
+
+    public String getSubscriptionType() {
+        return subscriptionType;
+    }
+
+    public void setSubscriptionType(String subscriptionType) {
+        this.subscriptionType = subscriptionType;
     }
 }

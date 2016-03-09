@@ -47,6 +47,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         Subscription subscription = subscriptionRepository.findOne(s);
         SubscriptionDTO dto = new SubscriptionDTO();
         BeanUtils.copyProperties(subscription, dto);
+        dto.setChargedAmount(subscriptionRepository.getChargedAmount(s));
         return dto;
     }
 
@@ -55,6 +56,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return subscriptionRepository.findAll(pageable).map(source -> {
             SubscriptionDTO dto = new SubscriptionDTO();
             BeanUtils.copyProperties(source, dto);
+            dto.setChargedAmount(subscriptionRepository.getChargedAmount(source.getCompanyId()));
             return dto;
         });
     }
@@ -71,6 +73,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return subscriptionRepository.findAll(predicate, pageable).map(source -> {
             SubscriptionDTO dto = new SubscriptionDTO();
             BeanUtils.copyProperties(source, dto);
+            dto.setChargedAmount(subscriptionRepository.getChargedAmount(source.getCompanyId()));
             return dto;
         });
     }
