@@ -1,9 +1,5 @@
 package com.gem.support.service.dto;
 
-import org.hibernate.validator.constraints.Length;
-
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -130,19 +126,29 @@ public class FeedbackDTO {
 
     public static class UserInfo {
 
+        String userId;
         String username;
         String avatar;
-        String email;
-        String company;
+        String companyId;
+        String companyName;
 
         public UserInfo() {
         }
 
-        public UserInfo(String username, String avatar, String email, String company) {
+        public UserInfo(String userId, String username, String avatar, String companyId, String companyName) {
+            this.userId = userId;
             this.username = username;
             this.avatar = avatar;
-            this.email = email;
-            this.company = company;
+            this.companyId = companyId;
+            this.companyName = companyName;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
         }
 
         public String getUsername() {
@@ -161,20 +167,20 @@ public class FeedbackDTO {
             this.avatar = avatar;
         }
 
-        public String getEmail() {
-            return email;
+        public String getCompanyId() {
+            return companyId;
         }
 
-        public void setEmail(String email) {
-            this.email = email;
+        public void setCompanyId(String companyId) {
+            this.companyId = companyId;
         }
 
-        public String getCompany() {
-            return company;
+        public String getCompanyName() {
+            return companyName;
         }
 
-        public void setCompany(String company) {
-            this.company = company;
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
         }
     }
 

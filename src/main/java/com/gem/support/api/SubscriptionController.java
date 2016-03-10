@@ -17,8 +17,8 @@ import java.util.Date;
 @RequestMapping("billing/subscription")
 public class SubscriptionController {
 
-    @Autowired
-    private SubscriptionService subscriptionService;
+   // @Autowired
+/*    private SubscriptionService subscriptionService;
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public Page<SubscriptionDTO> findAll(
@@ -26,6 +26,6 @@ public class SubscriptionController {
             @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date expirationDate,
             Pageable pageable) {
         return subscriptionService.find(startDate, expirationDate, pageable);
-    }
+    }*/
 
 }

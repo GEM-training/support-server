@@ -1,48 +1,33 @@
-package com.gem.support.persistent.model;
+package com.gem.support.service.dto;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
- * Created by vanhop on 3/8/16.
+ * Created by vanhop on 3/10/16.
  */
-@Entity
-@Table(name = "user_company")
-public class UserCompany {
+public class FeedbackBriefDTO {
 
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
     private String id;
-
-    @Column(name = "user_id", unique = true)
     private String userId;
-
-    @Column(name = "username")
     private String username;
-
-    @Column(name = "avatar")
-    private String avatar;
-
-    @Column(name = "company_id")
     private String companyId;
-
-    @Column(name = "company_name")
     private String companyName;
+    private String subContent;
+    private String avatar;
+    private Date time;
 
-    public UserCompany() {
+    public FeedbackBriefDTO() {
     }
 
-    public UserCompany(String userId, String username, String avatar, String companyId, String companyName) {
+    public FeedbackBriefDTO(String id, String userId, String username, String companyId, String companyName, String subContent, String avatar, Date time) {
+        this.id = id;
         this.userId = userId;
         this.username = username;
-        this.avatar = avatar;
         this.companyId = companyId;
         this.companyName = companyName;
+        this.subContent = subContent;
+        this.avatar = avatar;
+        this.time = time;
     }
 
     public String getId() {
@@ -69,14 +54,6 @@ public class UserCompany {
         this.username = username;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
     public String getCompanyId() {
         return companyId;
     }
@@ -91,5 +68,29 @@ public class UserCompany {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getSubContent() {
+        return subContent;
+    }
+
+    public void setSubContent(String subContent) {
+        this.subContent = subContent;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 }

@@ -11,14 +11,10 @@ import com.gem.support.service.FeedbackService;
 import com.gem.support.service.dto.CompanyTicketDTO;
 import com.gem.support.service.dto.FeedbackDTO;
 import com.mysema.query.Tuple;
-import com.mysema.query.jpa.JPASubQuery;
-import com.mysema.query.types.Predicate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,10 +39,12 @@ public class FeedbackServiceImpl implements FeedbackService {
 
         Feedback feedback = new Feedback();
         BeanUtils.copyProperties(feedbackDTO, feedback);
-
+        feedback.setUserId(feedbackDTO.getUserInfo().getUserId());
         //if user is not exist in user_company then insert and otherwise
-        if (userCompanyRepository.findByUserId(feedback.getUserId()) == null)
-            userCompanyRepository.save(new UserCompany(feedback.getUserId(), "Van hop", "12345", "Gem2"));
+        if (userCompanyRepository.findByUserId(feedback.getUserId()) == null) {
+            FeedbackDTO.UserInfo userInfo = feedbackDTO.getUserInfo();
+            userCompanyRepository.save(new UserCompany(userInfo.getUserId(), userInfo.getUsername(), userInfo.getAvatar(), userInfo.getCompanyId(),userInfo.getCompanyName()));
+        }
         feedbackRepository.save(feedback);
     }
 
@@ -65,25 +63,19 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public FeedbackDTO findOne(String s) {
-
         FeedbackDTO feedbackDTO = new FeedbackDTO();
         Feedback feedback = feedbackRepository.findOne(s);
         BeanUtils.copyProperties(feedback, feedbackDTO);
-        feedbackDTO.setUserInfo(new FeedbackDTO.UserInfo(feedback.getUserId(), "", "", ""));
+        UserCompany userCompany = userCompanyRepository.findByUserId(feedback.getUserId());
+        feedbackDTO.setUserInfo(new FeedbackDTO.UserInfo(userCompany.getUserId(),userCompany.getUsername(),userCompany.getAvatar(),userCompany.getCompanyId(),userCompany.getCompanyName()));
         return feedbackDTO;
     }
 
     @Override
     public Page<FeedbackDTO> findAll(Pageable pageable) {
-
-        PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), Sort.Direction.DESC,"time");
-        
-        return feedbackRepository.findAll(pageRequest).map(source -> {
-            FeedbackDTO feedbackDTO = new FeedbackDTO();
-            BeanUtils.copyProperties(source, feedbackDTO);
-            return feedbackDTO;
-        });
+        return null;
     }
+
 
     @Override
     public List<CompanyTicketDTO> getCompanyWithTicket() {
@@ -100,19 +92,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         return companyTicketDTOs;
     }
 
-    @Override
-    public Page<FeedbackDTO> listFeedbackOfCompany(String companyId, Pageable pageable) {
 
-        PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), Sort.Direction.DESC,"time");
-
-        Predicate predicate = QFeedback.feedback.userId.in(new JPASubQuery().from(QUserCompany.userCompany).where(QUserCompany.userCompany.companyId.eq(companyId)).list(QUserCompany.userCompany.userId));
-        return feedbackRepository.findAll(predicate, pageRequest).map(source -> {
-            FeedbackDTO feedbackDTO = new FeedbackDTO();
-            BeanUtils.copyProperties(source, feedbackDTO);
-            feedbackDTO.setUserInfo(new FeedbackDTO.UserInfo(source.getUserId(), "", "", companyId));
-            return feedbackDTO;
-        });
-
-    }
 
 }

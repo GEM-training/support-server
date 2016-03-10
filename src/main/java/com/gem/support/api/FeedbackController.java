@@ -1,8 +1,11 @@
 package com.gem.support.api;
 
+import com.gem.support.service.FeedbackBriefService;
 import com.gem.support.service.FeedbackService;
 import com.gem.support.service.dto.CompanyTicketDTO;
+import com.gem.support.service.dto.FeedbackBriefDTO;
 import com.gem.support.service.dto.FeedbackDTO;
+import com.gem.support.service.exception.ResourceInvalidedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,14 +20,22 @@ public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;
 
+    @Autowired
+    private FeedbackBriefService feedbackBriefService;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Page<FeedbackDTO> listFeedback(Pageable pageable){
-        return feedbackService.findAll(pageable);
+    public List<FeedbackBriefDTO> listFeedback(Pageable pageable){
+        return feedbackBriefService.findAll(pageable);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST , consumes = "application/json" , produces = "application/json")
     public void create(@RequestBody FeedbackDTO feedbackDTO){
-        feedbackService.create(feedbackDTO);
+
+        try {
+            feedbackService.create(feedbackDTO);
+        } catch (Exception e){
+            throw new ResourceInvalidedException(e.toString());
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -38,8 +49,8 @@ public class FeedbackController {
     }
 
     @RequestMapping(value = "/company/{id}", method = RequestMethod.GET)
-    public Page<FeedbackDTO> listFeedback(@PathVariable("id") String id, Pageable pageable){
-        return feedbackService.listFeedbackOfCompany(id,pageable);
+    public List<FeedbackBriefDTO> listFeedback(@PathVariable("id") String id, Pageable pageable){
+        return feedbackBriefService.listFeedbackOfCompany(id,pageable);
     }
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
