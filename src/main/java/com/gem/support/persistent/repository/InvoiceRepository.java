@@ -15,7 +15,15 @@ import java.util.Date;
 public interface InvoiceRepository extends
         PagingAndSortingRepository<Invoice, String>, QueryDslPredicateExecutor<Invoice>, InvoiceRepositoryCustom {
 
-    @Query("select new com.gem.support.persistent.model.Revenue(min(i.issuedDate), max(i.issuedDate), sum(i.feePerUser * i.numOfUser)) from Invoice i where i.issuedDate between ?1 and ?2 group by year(i.issuedDate), month(i.issuedDate)")
+    @Query("select new com.gem.support.persistent.model.Revenue(" +
+                "min(i.issuedDate), " +
+                "max(i.issuedDate), " +
+                "sum(i.numOfUser), " +
+                "0, " +
+                "sum(i.feePerUser * i.numOfUser)) " +
+            "from Invoice i " +
+            "where i.issuedDate >= ?1 and i.issuedDate <= ?2 " +
+            "group by year(i.issuedDate), month(i.issuedDate)")
     Page<Revenue> getTotalRevenue(Date from, Date to, Pageable pageable);
 
 }

@@ -9,15 +9,19 @@ import java.util.Date;
 public class Revenue {
     private Date from;
     private Date to;
+    private long totalUser;
+    private int userIncrement;
     private double totalRevenue;
 
-    public Revenue(Date from, Date to, double totalRevenue) {
-        this.from = from;
-        this.to = to;
-        this.totalRevenue = totalRevenue;
+    public Revenue() {
     }
 
-    public Revenue() {
+    public Revenue(Date from, Date to, long totalUser, int userIncrement, double totalRevenue) {
+        this.from = from;
+        this.to = to;
+        this.totalUser = totalUser;
+        this.userIncrement = userIncrement;
+        this.totalRevenue = totalRevenue;
     }
 
     public Date getFrom() {
@@ -34,6 +38,22 @@ public class Revenue {
 
     public void setTo(Date to) {
         this.to = to;
+    }
+
+    public long getTotalUser() {
+        return totalUser;
+    }
+
+    public void setTotalUser(long totalUser) {
+        this.totalUser = totalUser;
+    }
+
+    public int getUserIncrement() {
+        return userIncrement;
+    }
+
+    public void setUserIncrement(int userIncrement) {
+        this.userIncrement = userIncrement;
     }
 
     public double getTotalRevenue() {
