@@ -2,14 +2,14 @@ package com.gem.support.service.dto;
 
 import java.util.Date;
 
-/**
- * Created by qsoft on 3/7/16.
- */
 public class RevenueDTO {
+
     private String companyId;
     private Date from;
     private Date to;
-    double totalRevenue;
+    private long numOfUser;
+    private int userIncrement;
+    private double totalRevenue;
 
     public String getCompanyId() {
         return companyId;
@@ -19,13 +19,28 @@ public class RevenueDTO {
         this.companyId = companyId;
     }
 
-
-    public Date getFrom() {
-        return from;
+    public long getNumOfUser() {
+        return numOfUser;
     }
 
-    public void setFrom(Date from) {
-        this.from = from;
+    public void setNumOfUser(long numOfUser) {
+        this.numOfUser = numOfUser;
+    }
+
+    public int getUserIncrement() {
+        return userIncrement;
+    }
+
+    public void setUserIncrement(int userIncrement) {
+        this.userIncrement = userIncrement;
+    }
+
+    public double getTotalRevenue() {
+        return totalRevenue;
+    }
+
+    public void setTotalRevenue(double totalRevenue) {
+        this.totalRevenue = totalRevenue;
     }
 
     public Date getTo() {
@@ -36,11 +51,11 @@ public class RevenueDTO {
         this.to = to;
     }
 
-    public double getTotalRevenue() {
-        return totalRevenue;
+    public Date getFrom() {
+        return from;
     }
 
-    public void setTotalRevenue(double totalRevenue) {
-        this.totalRevenue = totalRevenue;
+    public void setFrom(Date from) {
+        this.from = from;
     }
 }

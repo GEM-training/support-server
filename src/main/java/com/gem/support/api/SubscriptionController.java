@@ -17,15 +17,15 @@ import java.util.Date;
 @RequestMapping("billing/subscription")
 public class SubscriptionController {
 
-   // @Autowired
-/*    private SubscriptionService subscriptionService;
+    @Autowired
+    private SubscriptionService subscriptionService;
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     public Page<SubscriptionDTO> findAll(
             @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date expirationDate,
+            @RequestParam(name = "expirationDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date expirationDate,
             Pageable pageable) {
         return subscriptionService.find(startDate, expirationDate, pageable);
-    }*/
+    }
 
 }

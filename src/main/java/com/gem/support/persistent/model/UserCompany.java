@@ -1,9 +1,15 @@
 package com.gem.support.persistent.model;
 
+<<<<<<< HEAD
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+=======
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+>>>>>>> fe71992e1bc93f1086a0788607a44a49209b5789
 
 /**
  * Created by vanhop on 3/8/16.
