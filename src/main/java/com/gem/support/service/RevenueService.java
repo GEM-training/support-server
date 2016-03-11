@@ -8,5 +8,5 @@ import java.util.Date;
 
 public interface RevenueService {
     RevenueDTO getRevenue(String companyId, Date from, Date to);
-    Page<RevenueDTO> listRevenue(Date from, Date to, Pageable pageable);
+    Page<RevenueDTO> listRevenue(Pageable pageable);
 }

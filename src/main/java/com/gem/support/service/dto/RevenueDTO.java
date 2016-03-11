@@ -7,8 +7,8 @@ public class RevenueDTO {
     private String companyId;
     private Date from;
     private Date to;
-    private long totalUser;
-    private int userIncrement;
+    private Long totalUser;
+    private Integer userIncrement;
     private double totalRevenue;
 
 

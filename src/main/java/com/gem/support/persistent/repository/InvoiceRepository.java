@@ -9,8 +9,6 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-
 @Repository
 public interface InvoiceRepository extends
         PagingAndSortingRepository<Invoice, String>, QueryDslPredicateExecutor<Invoice>, InvoiceRepositoryCustom {
@@ -22,8 +20,8 @@ public interface InvoiceRepository extends
                 "0, " +
                 "sum(i.feePerUser * i.numOfUser)) " +
             "from Invoice i " +
-            "where i.issuedDate >= ?1 and i.issuedDate <= ?2 " +
             "group by year(i.issuedDate), month(i.issuedDate)")
-    Page<Revenue> getTotalRevenue(Date from, Date to, Pageable pageable);
+    Page<Revenue> getTotalRevenue(Pageable pageable);
+
 
 }

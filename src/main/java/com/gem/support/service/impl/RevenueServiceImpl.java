@@ -50,8 +50,8 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public Page<RevenueDTO> listRevenue(Date from, Date to, Pageable pageable) {
-        return invoiceRepository.getTotalRevenue(from, to, pageable).map(source -> {
+    public Page<RevenueDTO> listRevenue(Pageable pageable) {
+        return invoiceRepository.getTotalRevenue(pageable).map(source -> {
             RevenueDTO revenue = new RevenueDTO();
             BeanUtils.copyProperties(source, revenue);
             return revenue;

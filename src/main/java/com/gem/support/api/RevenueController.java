@@ -28,7 +28,7 @@ public class RevenueController {
         if(company != null) {
             return revenueService.getRevenue(company, from, to);
         }
-        return revenueService.listRevenue(from, to, pageable);
+        return revenueService.listRevenue(pageable);
     }
 
 }

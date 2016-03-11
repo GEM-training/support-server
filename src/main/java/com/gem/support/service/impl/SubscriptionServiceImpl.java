@@ -1,8 +1,13 @@
 package com.gem.support.service.impl;
 
+import com.gem.support.persistent.model.QSubscription;
+import com.gem.support.persistent.model.Subscription;
 import com.gem.support.persistent.repository.SubscriptionRepository;
 import com.gem.support.service.SubscriptionService;
 import com.gem.support.service.dto.SubscriptionDTO;
+import com.mysema.query.types.expr.BooleanExpression;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,40 +19,10 @@ import java.util.Date;
 @Transactional
 public class SubscriptionServiceImpl implements SubscriptionService {
 
-    //@Autowired
+    @Autowired
     private SubscriptionRepository subscriptionRepository;
 
     @Override
-    public Page<SubscriptionDTO> find(Date startDate, Date expirationDate, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public void create(SubscriptionDTO subscriptionDTO) {
-
-    }
-
-    @Override
-    public void update(SubscriptionDTO subscriptionDTO) {
-
-    }
-
-    @Override
-    public void delete(String s) {
-
-    }
-
-    @Override
-    public SubscriptionDTO findOne(String s) {
-        return null;
-    }
-
-    @Override
-    public Page<SubscriptionDTO> findAll(Pageable pageable) {
-        return null;
-    }
-
-    /*@Override
     public void create(SubscriptionDTO subscriptionDTO) {
         Subscription subscription = new Subscription();
         BeanUtils.copyProperties(subscriptionDTO, subscription);
@@ -101,5 +76,5 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             dto.setChargedAmount(subscriptionRepository.getChargedAmount(source.getCompanyId()));
             return dto;
         });
-    }*/
+    }
 }
