@@ -7,33 +7,24 @@ public class RevenueDTO {
     private String companyId;
     private Date from;
     private Date to;
-    private Long totalUser;
-    private Integer userIncrement;
+    private long numOfUser;
+    private int userIncrement;
     private double totalRevenue;
 
-
-    public Date getFrom() {
-        return from;
+    public String getCompanyId() {
+        return companyId;
     }
 
-    public void setFrom(Date from) {
-        this.from = from;
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 
-    public Date getTo() {
-        return to;
+    public long getNumOfUser() {
+        return numOfUser;
     }
 
-    public void setTo(Date to) {
-        this.to = to;
-    }
-
-    public long getTotalUser() {
-        return totalUser;
-    }
-
-    public void setTotalUser(long totalUser) {
-        this.totalUser = totalUser;
+    public void setNumOfUser(long numOfUser) {
+        this.numOfUser = numOfUser;
     }
 
     public int getUserIncrement() {
@@ -52,11 +43,19 @@ public class RevenueDTO {
         this.totalRevenue = totalRevenue;
     }
 
-    public String getCompanyId() {
-        return companyId;
+    public Date getTo() {
+        return to;
     }
 
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
+    public void setTo(Date to) {
+        this.to = to;
+    }
+
+    public Date getFrom() {
+        return from;
+    }
+
+    public void setFrom(Date from) {
+        this.from = from;
     }
 }

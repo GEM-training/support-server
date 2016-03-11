@@ -3,6 +3,7 @@ package com.gem.support.service.impl;
 import com.gem.support.persistent.model.Invoice;
 import com.gem.support.persistent.model.QInvoice;
 import com.gem.support.persistent.repository.InvoiceRepository;
+import com.gem.support.persistent.repository.TotalRevenueRepository;
 import com.gem.support.service.RevenueService;
 import com.gem.support.service.dto.RevenueDTO;
 import com.mysema.query.types.expr.BooleanExpression;
@@ -22,6 +23,9 @@ public class RevenueServiceImpl implements RevenueService {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
+    @Autowired
+    private TotalRevenueRepository totalRevenueRepository;
+
     @Override
     public RevenueDTO getRevenue(String companyId, Date from, Date to) {
         BooleanExpression predicate  = QInvoice.invoice.isNotNull();
@@ -37,21 +41,23 @@ public class RevenueServiceImpl implements RevenueService {
 
         Iterable <Invoice> invoices = invoiceRepository.findAll(predicate);
         double sumRevenue = 0;
+        int totalUser = 0;
         for(Invoice invoice: invoices) {
-            sumRevenue+= invoice.getFeePerUser() * invoice.getNumOfUser();
+            sumRevenue += invoice.getFeePerUser() * invoice.getNumOfUser();
+            totalUser += invoice.getNumOfUser();
         }
 
         RevenueDTO dto = new RevenueDTO();
         dto.setTotalRevenue(sumRevenue);
-        dto.setFrom(from);
+        dto.setUserIncrement(totalUser);
+        dto.setNumOfUser(totalUser);
         dto.setCompanyId(companyId);
-        dto.setTo(to);
         return dto;
     }
 
     @Override
     public Page<RevenueDTO> listRevenue(Pageable pageable) {
-        return invoiceRepository.getTotalRevenue(pageable).map(source -> {
+        return totalRevenueRepository.findAll(pageable).map(source -> {
             RevenueDTO revenue = new RevenueDTO();
             BeanUtils.copyProperties(source, revenue);
             return revenue;
