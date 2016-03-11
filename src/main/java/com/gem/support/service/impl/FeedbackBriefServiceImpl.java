@@ -23,19 +23,19 @@ import java.util.List;
 public class FeedbackBriefServiceImpl implements FeedbackBriefService {
 
     @Autowired
-    private FeedbackBriefRepository feedbackBrifRepositor;
+    private FeedbackBriefRepository feedbackBriefRepository;
 
     @Override
     public List<FeedbackBriefDTO> findAll(Pageable pageable) {
-        return convertTuple2FeedbackBrief(feedbackBrifRepositor.findAllFeedbackBrief(pageable));
+        return convertTuple2FeedbackBrief(feedbackBriefRepository.findAllFeedbackBrief(pageable));
     }
 
     @Override
     public List<FeedbackBriefDTO> listFeedbackOfCompany(String companyId, Pageable pageable) {
-        return convertTuple2FeedbackBrief(feedbackBrifRepositor.findAllFeedbackBriefOfCompany(companyId,pageable));
+        return convertTuple2FeedbackBrief(feedbackBriefRepository.findAllFeedbackBriefOfCompany(companyId, pageable));
     }
 
-    private List<FeedbackBriefDTO> convertTuple2FeedbackBrief(List<Tuple> tuples){
+    private List<FeedbackBriefDTO> convertTuple2FeedbackBrief(List<Tuple> tuples) {
         List<FeedbackBriefDTO> feedbackBriefDTOs = new ArrayList<>();
         tuples.forEach(source -> {
             FeedbackBriefDTO feedbackBriefDTO = new FeedbackBriefDTO();
@@ -45,7 +45,9 @@ public class FeedbackBriefServiceImpl implements FeedbackBriefService {
             feedbackBriefDTO.setCompanyName(source.get(QUserCompany.userCompany.companyName));
             feedbackBriefDTO.setCompanyId(source.get(QUserCompany.userCompany.companyId));
             feedbackBriefDTO.setTime(source.get(QFeedback.feedback.time));
-            feedbackBriefDTO.setSubContent(source.get(QFeedback.feedback.content).substring(0,100));
+            String content = source.get(QFeedback.feedback.content);
+            content = content == null ? "" : content;
+            feedbackBriefDTO.setSubContent(content.substring(0, content.length() < 100 ? content.length() : 100));
             feedbackBriefDTOs.add(feedbackBriefDTO);
         });
         return feedbackBriefDTOs;

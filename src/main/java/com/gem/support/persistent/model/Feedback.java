@@ -22,7 +22,7 @@ public class Feedback {
     private String userId;
 
     @Column(name = "content")
-    @Length(min = 1,max = 5000)
+    @Length(min = 1,max = 10000)
     private String content;
 
     @Column(name = "time")

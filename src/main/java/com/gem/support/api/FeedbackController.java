@@ -2,7 +2,7 @@ package com.gem.support.api;
 
 import com.gem.support.service.FeedbackBriefService;
 import com.gem.support.service.FeedbackService;
-import com.gem.support.service.dto.CompanyTicketDTO;
+import com.gem.support.service.dto.CompanyFeedbackDTO;
 import com.gem.support.service.dto.FeedbackBriefDTO;
 import com.gem.support.service.dto.FeedbackDTO;
 import com.gem.support.service.exception.ResourceInvalidedException;
@@ -54,7 +54,7 @@ public class FeedbackController {
     }
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
-    public List<CompanyTicketDTO> companyWithFeedback(){
+    public List<CompanyFeedbackDTO> companyWithFeedback(){
         return feedbackService.getCompanyWithTicket();
     }
 

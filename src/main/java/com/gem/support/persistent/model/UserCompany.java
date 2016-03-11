@@ -1,9 +1,9 @@
 package com.gem.support.persistent.model;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by vanhop on 3/8/16.
@@ -13,12 +13,8 @@ import javax.validation.constraints.NotNull;
 public class UserCompany {
 
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    private String id;
 
+    @Id
     @Column(name = "user_id", unique = true)
     private String userId;
 
@@ -43,14 +39,6 @@ public class UserCompany {
         this.avatar = avatar;
         this.companyId = companyId;
         this.companyName = companyName;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getUserId() {
