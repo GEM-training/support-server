@@ -6,22 +6,21 @@ import com.gem.support.persistent.repository.InvoiceRepository;
 import com.gem.support.service.RevenueService;
 import com.gem.support.service.dto.RevenueDTO;
 import com.mysema.query.types.expr.BooleanExpression;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
-/**
- * Created by qsoft on 3/7/16.
- */
 @Service
 @Transactional
 public class RevenueServiceImpl implements RevenueService {
+
     @Autowired
-    InvoiceRepository invoiceRepository;
-
-
+    private InvoiceRepository invoiceRepository;
 
     @Override
     public RevenueDTO getRevenue(String companyId, Date from, Date to) {
@@ -48,5 +47,14 @@ public class RevenueServiceImpl implements RevenueService {
         dto.setCompanyId(companyId);
         dto.setTo(to);
         return dto;
+    }
+
+    @Override
+    public Page<RevenueDTO> listRevenue(Date from, Date to, Pageable pageable) {
+        return invoiceRepository.getTotalRevenue(from, to, pageable).map(source -> {
+            RevenueDTO revenue = new RevenueDTO();
+            BeanUtils.copyProperties(source, revenue);
+            return revenue;
+        });
     }
 }

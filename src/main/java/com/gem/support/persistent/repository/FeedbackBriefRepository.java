@@ -1,7 +1,6 @@
 package com.gem.support.persistent.repository;
 
 import com.mysema.query.Tuple;
-import org.aspectj.lang.annotation.RequiredTypes;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 

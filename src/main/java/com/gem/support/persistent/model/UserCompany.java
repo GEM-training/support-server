@@ -3,7 +3,6 @@ package com.gem.support.persistent.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 /**
  * Created by vanhop on 3/8/16.

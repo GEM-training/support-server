@@ -4,6 +4,9 @@ package com.gem.support.persistent.model;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Model class for table subscription
+ */
 @Entity(name = "subscription")
 public class Subscription {
 

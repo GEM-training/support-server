@@ -33,4 +33,5 @@ public class InvoiceRepositoryImpl implements InvoiceRepositoryCustom {
         }
         return invoice1.getNumOfUser();
     }
+
 }

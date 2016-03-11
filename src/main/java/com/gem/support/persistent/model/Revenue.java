@@ -1,21 +1,24 @@
-package com.gem.support.service.dto;
+package com.gem.support.persistent.model;
 
 import java.util.Date;
 
-public class RevenueDTO {
-    private String companyId;
+/**
+ * This class is a data container for total revenue in a time period.
+ * This is not a model class.
+ */
+public class Revenue {
     private Date from;
     private Date to;
     private double totalRevenue;
 
-    public String getCompanyId() {
-        return companyId;
+    public Revenue(Date from, Date to, double totalRevenue) {
+        this.from = from;
+        this.to = to;
+        this.totalRevenue = totalRevenue;
     }
 
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
+    public Revenue() {
     }
-
 
     public Date getFrom() {
         return from;
