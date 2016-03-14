@@ -7,6 +7,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.Date;
 
 public interface RevenueService {
-    RevenueDTO getRevenue(String companyId, Date from, Date to);
-    Page<RevenueDTO> listRevenue(Pageable pageable);
+    RevenueDTO calculateSumRevenue(String companyId, Date from, Date to);
+    Page<RevenueDTO> listSystemRevenueByMonth(Pageable pageable);
 }

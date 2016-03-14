@@ -27,7 +27,7 @@ public class RevenueServiceImpl implements RevenueService {
     private TotalRevenueRepository totalRevenueRepository;
 
     @Override
-    public RevenueDTO getRevenue(String companyId, Date from, Date to) {
+    public RevenueDTO calculateSumRevenue(String companyId, Date from, Date to) {
         BooleanExpression predicate  = QInvoice.invoice.isNotNull();
         if(companyId != null) {
             predicate = predicate.and(QInvoice.invoice.companyId.eq(companyId));
@@ -56,7 +56,7 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public Page<RevenueDTO> listRevenue(Pageable pageable) {
+    public Page<RevenueDTO> listSystemRevenueByMonth(Pageable pageable) {
         return totalRevenueRepository.findAll(pageable).map(source -> {
             RevenueDTO revenue = new RevenueDTO();
             BeanUtils.copyProperties(source, revenue);
