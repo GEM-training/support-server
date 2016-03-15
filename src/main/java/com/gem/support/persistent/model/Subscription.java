@@ -7,7 +7,8 @@ import java.util.Date;
 /**
  * Model class for table subscription
  */
-@Entity(name = "subscription")
+@Entity
+@Table(name = "subscription")
 public class Subscription {
 
     @Id

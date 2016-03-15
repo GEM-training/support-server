@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Model class for table invoice
  */
-@Entity
+@Entity()
 @Table(name = "invoice")
 public class Invoice {
 

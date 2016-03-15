@@ -26,9 +26,9 @@ public class RevenueController {
             @RequestParam(name = "to", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
             Pageable pageable) {
         if(company != null) {
-            return revenueService.getRevenue(company, from, to);
+            return revenueService.calculateSumRevenue(company, from, to);
         }
-        return revenueService.listRevenue(pageable);
+        return revenueService.listSystemRevenueByMonth(pageable);
     }
 
 }

@@ -8,7 +8,8 @@ import java.util.Set;
 /**
  * Model class for table subscription_type
  */
-@Entity(name = "subscription_type")
+@Entity
+@Table(name = "subscription_type")
 public class SubscriptionType {
 
     @Id
