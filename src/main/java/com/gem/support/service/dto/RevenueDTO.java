@@ -8,7 +8,7 @@ public class RevenueDTO {
     private Date from;
     private Date to;
     private long numOfUser;
-    private int userIncrement;
+    private long userIncrement;
     private double totalRevenue;
 
     public String getCompanyId() {
@@ -27,11 +27,11 @@ public class RevenueDTO {
         this.numOfUser = numOfUser;
     }
 
-    public int getUserIncrement() {
+    public long getUserIncrement() {
         return userIncrement;
     }
 
-    public void setUserIncrement(int userIncrement) {
+    public void setUserIncrement(long userIncrement) {
         this.userIncrement = userIncrement;
     }
 

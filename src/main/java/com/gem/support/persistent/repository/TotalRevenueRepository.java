@@ -6,5 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TotalRevenueRepository extends PagingAndSortingRepository<TotalRevenue, Long>, QueryDslPredicateExecutor<TotalRevenue>{
+public interface TotalRevenueRepository extends PagingAndSortingRepository<TotalRevenue, Long>,
+        QueryDslPredicateExecutor<TotalRevenue>, TotalRevenueRepositoryCustom {
+
 }

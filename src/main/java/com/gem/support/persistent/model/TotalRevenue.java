@@ -6,6 +6,7 @@ import org.hibernate.annotations.Synchronize;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -14,6 +15,7 @@ import java.util.Date;
  * [CRITICAL WARNING] native sql in use!!! need alternative solution!!!
  */
 @Entity
+@Table(name = "total_revenue")
 @Subselect("select " +
             "row_number() over() as id, " +
             "min(issued_date) as from, " +
@@ -27,24 +29,33 @@ import java.util.Date;
 public class TotalRevenue {
 
     @Id
+    @Column(name = "id")
     private Long id;
 
-    @Column
+    @Column(name = "from")
     private Date from;
 
-    @Column
+    @Column(name = "to")
     private Date to;
 
-    @Column
+    @Column(name = "num_of_user")
     private long numOfUser;
 
-    @Column
-    private int userIncrement;
+    @Column(name = "user_increment")
+    private long userIncrement;
 
-    @Column
+    @Column(name = "total_revenue")
     private double totalRevenue;
 
     public TotalRevenue() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Date getFrom() {
         return from;
@@ -70,19 +81,19 @@ public class TotalRevenue {
         this.numOfUser = numOfUser;
     }
 
-    public int getUserIncrement() {
-        return userIncrement;
-    }
-
-    public void setUserIncrement(int userIncrement) {
-        this.userIncrement = userIncrement;
-    }
-
     public double getTotalRevenue() {
         return totalRevenue;
     }
 
     public void setTotalRevenue(double totalRevenue) {
         this.totalRevenue = totalRevenue;
+    }
+
+    public long getUserIncrement() {
+        return userIncrement;
+    }
+
+    public void setUserIncrement(long userIncrement) {
+        this.userIncrement = userIncrement;
     }
 }
