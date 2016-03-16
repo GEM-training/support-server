@@ -5,6 +5,7 @@ import java.util.Date;
 public class SubscriptionDTO {
     private String companyId;
     private String subscriptionType;
+    private Date joinDate;
     private Date startDate;
     private Date expirationDate;
     private double chargedAmount;
@@ -37,11 +38,11 @@ public class SubscriptionDTO {
         return chargedAmount;
     }
 
-    public void setChargedAmount(Double chargedAmount) {
+    public void setChargedAmount(double chargedAmount) {
         this.chargedAmount = chargedAmount;
     }
 
-    public void setChargedAmount(double chargedAmount) {
+    public void setChargedAmount(Double chargedAmount) {
         this.chargedAmount = chargedAmount;
     }
 
@@ -51,5 +52,13 @@ public class SubscriptionDTO {
 
     public void setSubscriptionType(String subscriptionType) {
         this.subscriptionType = subscriptionType;
+    }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
     }
 }
