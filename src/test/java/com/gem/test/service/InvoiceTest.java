@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertEquals;
@@ -14,6 +15,8 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={Application.class})
 @Transactional
+@TransactionConfiguration(defaultRollback = true)
+
 public class InvoiceTest {
 
     @Autowired
@@ -26,6 +29,10 @@ public class InvoiceTest {
 
     }
 
+    @Test
+    public void testInvoiceDelete() {
+        invoiceService.delete("de305d54-75b4-431b-adb2-eb5b9e546041");
+    }
 
 
 
