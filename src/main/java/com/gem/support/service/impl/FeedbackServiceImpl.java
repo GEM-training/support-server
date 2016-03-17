@@ -2,17 +2,15 @@ package com.gem.support.service.impl;
 
 import com.gem.support.persistent.model.Feedback;
 import com.gem.support.persistent.model.QFeedback;
-import com.gem.support.persistent.model.QUserCompany;
 import com.gem.support.persistent.model.UserCompany;
+import com.gem.support.persistent.repository.CompanyFeecbackRepository;
 import com.gem.support.persistent.repository.FeedbackRepository;
 import com.gem.support.persistent.repository.UserCompanyRepository;
-import com.gem.support.persistent.repository.UserCompanyRepositoryCustom;
 import com.gem.support.service.FeedbackService;
 import com.gem.support.service.dto.CompanyFeedbackDTO;
 import com.gem.support.service.dto.FeedbackDTO;
 import com.gem.support.service.exception.ResourceInvalidedException;
 import com.gem.support.service.exception.ResourceNotFoundException;
-import com.mysema.query.Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -22,8 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -35,10 +32,10 @@ public class FeedbackServiceImpl implements FeedbackService {
     private FeedbackRepository feedbackRepository;
 
     @Autowired
-    private UserCompanyRepositoryCustom userCompanyRepositoryCustom;
+    private UserCompanyRepository userCompanyRepository;
 
     @Autowired
-    private UserCompanyRepository userCompanyRepository;
+    private CompanyFeecbackRepository companyFeecbackRepository;
 
     @Override
     public void create(FeedbackDTO feedbackDTO) {
@@ -51,9 +48,13 @@ public class FeedbackServiceImpl implements FeedbackService {
             if (userCompanyRepository.findByUserId(feedback.getUserId()) == null) {
                 FeedbackDTO.UserInfo userInfo = feedbackDTO.getUserInfo();
                 userCompanyRepository.save(new UserCompany(userInfo.getUserId(), userInfo.getUsername(), userInfo.getAvatar(), userInfo.getCompanyId(),userInfo.getCompanyName()));
-                logger.info(userInfo.getUserId() + " have sent a feedback");
             }
+
+            if(feedback.getTime() == null)
+                feedback.setTime(new Date());
+
             feedbackRepository.save(feedback);
+            logger.info(feedbackDTO.getUserInfo().getUserId() + " have sent a feedback");
         } catch (Exception e){
             throw new ResourceInvalidedException(e.getMessage());
         }
@@ -80,8 +81,11 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public FeedbackDTO findOne(String s) {
+
         FeedbackDTO feedbackDTO = new FeedbackDTO();
         Feedback feedback = feedbackRepository.findOne(s);
+        if (feedback == null)
+            throw new ResourceNotFoundException();
         BeanUtils.copyProperties(feedback, feedbackDTO);
         UserCompany userCompany = userCompanyRepository.findByUserId(feedback.getUserId());
         feedbackDTO.setUserInfo(new FeedbackDTO.UserInfo(userCompany.getUserId(),userCompany.getUsername(),userCompany.getAvatar(),userCompany.getCompanyId(),userCompany.getCompanyName()));
@@ -96,20 +100,12 @@ public class FeedbackServiceImpl implements FeedbackService {
 
 
     @Override
-    public List<CompanyFeedbackDTO> getCompanyWithTicket() {
-
-        List<Tuple> companyWithFeedbacks = userCompanyRepositoryCustom.getSumFeedbackOfCompany();
-        List<CompanyFeedbackDTO> companyFeedbackDTOs = new ArrayList<>();
-
-        companyWithFeedbacks.stream().forEach(source ->{
-                long count = source.get(QUserCompany.userCompany.count()) == null ? 0 : source.get(QUserCompany.userCompany.count());
-                companyFeedbackDTOs.add(new CompanyFeedbackDTO(
-                        source.get(QUserCompany.userCompany.companyId),
-                        source.get(QUserCompany.userCompany.companyName),
-                        count));
+    public Page<CompanyFeedbackDTO> getCompanyWithTicket(Pageable pageable) {
+        return companyFeecbackRepository.findAll(pageable).map(source -> {
+            CompanyFeedbackDTO companyFeedbackDTO = new CompanyFeedbackDTO();
+            BeanUtils.copyProperties(source,companyFeedbackDTO);
+            return companyFeedbackDTO;
         });
-
-        return companyFeedbackDTOs;
     }
 
 }

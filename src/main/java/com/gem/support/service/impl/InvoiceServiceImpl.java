@@ -1,6 +1,7 @@
 package com.gem.support.service.impl;
 
 import com.gem.support.persistent.model.Invoice;
+import com.gem.support.persistent.model.QFeedback;
 import com.gem.support.persistent.model.QInvoice;
 import com.gem.support.persistent.repository.InvoiceRepository;
 import com.gem.support.service.InvoiceService;

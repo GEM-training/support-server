@@ -1,6 +1,7 @@
 package com.gem.support.service;
 
 import com.gem.support.service.dto.FeedbackBriefDTO;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,6 @@ import java.util.List;
  */
 @Service
 public interface FeedbackBriefService{
-    List<FeedbackBriefDTO> findAll(Pageable pageable);
-    List<FeedbackBriefDTO> listFeedbackOfCompany(String companyId, Pageable pageable);
+    Page<FeedbackBriefDTO> findAll(Pageable pageable);
+    Page<FeedbackBriefDTO> findAllByCompanyId(String companyId, Pageable pageable);
 }

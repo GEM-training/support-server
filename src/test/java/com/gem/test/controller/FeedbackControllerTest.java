@@ -1,15 +1,22 @@
 package com.gem.test.controller;
 
 import com.gem.support.Application;
+import com.gem.support.api.FeedbackController;
+import com.gem.support.persistent.model.Feedback;
+import com.gem.support.persistent.repository.FeedbackRepository;
 import com.gem.support.service.FeedbackService;
 import com.gem.support.service.dto.CompanyFeedbackDTO;
 import com.gem.support.service.dto.FeedbackDTO;
 import com.gem.support.service.exception.ResourceInvalidedException;
+import com.gem.support.service.exception.ResourceNotFoundException;
 import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.powermock.api.mockito.PowerMockito;
@@ -35,86 +42,31 @@ import static org.mockito.Matchers.any;
 @ContextConfiguration(classes={Application.class})
 public class FeedbackControllerTest {
 
-   /* @Autowired
-    private FeedbackService feedbackService;*/
+    @Mock
+    private FeedbackRepository feedbackRepository;
 
+    @InjectMocks
     @Autowired
-    private WebApplicationContext wac;
-    private MockMvc mockMvc;
+    private FeedbackService feedbackService;
+
     @Before
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-    }
-    @Test
-    public void getFeedback() throws Exception {
-        this.mockMvc.perform(get("/feedback")).andExpect(status().isOk());
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
     }
 
-/*    @Test(expected = ResourceInvalidedException.class)
-    public void createInvalidedFeedback(){
-       // when(feedbackService.create(any(FeedbackDTO.class))).thenThrow();
-        // create empty feedbackDTO
-        FeedbackDTO feedbackDTO = new FeedbackDTO();
-        feedbackService.create(feedbackDTO);
-    }*/
-
-/*    @Test
-    public void est(){
-        FeedbackService mock = PowerMockito.mock(FeedbackService.class);
-        Pageable pageable = new Pageable() {
+    @Test(expected = ResourceNotFoundException.class)
+    public void findOne(){
+        when(feedbackRepository.findOne(any(String.class))).then(new Answer<Feedback>() {
             @Override
-            public int getPageNumber() {
-                return 0;
-            }
-
-            @Override
-            public int getPageSize() {
-                return 2;
-            }
-
-            @Override
-            public int getOffset() {
-                return 0;
-            }
-
-            @Override
-            public Sort getSort() {
-                return null;
-            }
-
-            @Override
-            public Pageable next() {
-                return null;
-            }
-
-            @Override
-            public Pageable previousOrFirst() {
-                return null;
-            }
-
-            @Override
-            public Pageable first() {
-                return null;
-            }
-
-            @Override
-            public boolean hasPrevious() {
-                return false;
-            }
-        };
-        PowerMockito.when(mock.getCompanyWithTicket(pageable)).then(new Answer<CompanyFeedbackDTO>() {
-
-            @Override
-            public CompanyFeedbackDTO answer(InvocationOnMock invocationOnMock) throws Throwable {
-                CompanyFeedbackDTO companyFeedbackDTO = invocationOnMock.getArgumentAt(0,CompanyFeedbackDTO.class);
-                return companyFeedbackDTO;
+            public Feedback answer(InvocationOnMock invocationOnMock) throws Throwable {
+                return invocationOnMock.getArgumentAt(0,Feedback.class);
             }
         });
 
-        com.gem.support.api.FeedbackControllerTest employeeController = new com.gem.support.api.FeedbackControllerTest(mock);
+        Assert.assertNotNull(feedbackRepository.findOne("ff808181537e703201537efe8e280008"));
 
-        Assert.assertEquals(2, employeeController.companyWithFeedback(pageable).getSize());
-    }*/
+    }
+
 
 
 
