@@ -13,7 +13,6 @@ import javax.persistence.Table;
 public class UserCompany {
 
 
-
     @Id
     @Column(name = "user_id", unique = true)
     private String userId;

@@ -60,6 +60,7 @@ public class RevenueServiceImpl implements RevenueService {
         return totalRevenueRepository.findAll(pageable).map(source -> {
             RevenueDTO revenue = new RevenueDTO();
             BeanUtils.copyProperties(source, revenue);
+            revenue.setUserIncrement(totalRevenueRepository.getTotalUserIncrement(source.getId()));
             return revenue;
         });
     }

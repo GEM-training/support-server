@@ -14,7 +14,7 @@ public class Feedback {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
     @Column(name = "user_id")

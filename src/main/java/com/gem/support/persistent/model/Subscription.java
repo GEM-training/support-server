@@ -19,6 +19,9 @@ public class Subscription {
     @JoinColumn(name = "subscription_type_id", referencedColumnName = "id")
     private SubscriptionType subscriptionType;
 
+    @Column(name = "join_date", nullable = false)
+    private Date joinDate = new Date();
+
     @Column(name = "start_date", nullable = false)
     private Date startDate;
 
@@ -55,5 +58,13 @@ public class Subscription {
 
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
     }
 }
