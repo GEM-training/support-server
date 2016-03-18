@@ -14,5 +14,5 @@ import java.util.List;
 public interface FeedbackService extends BaseService<FeedbackDTO,String> {
 
     Page<CompanyFeedbackDTO> getCompanyWithTicket(Pageable pageable);
-    File getFileToStatistic();
+    Page<FeedbackDTO> findAllByCompanyId(Pageable pageable,String id);
 }

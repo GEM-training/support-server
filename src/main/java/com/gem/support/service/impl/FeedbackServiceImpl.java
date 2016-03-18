@@ -1,8 +1,6 @@
 package com.gem.support.service.impl;
 
-import com.gem.support.persistent.model.Feedback;
-import com.gem.support.persistent.model.QFeedback;
-import com.gem.support.persistent.model.UserCompany;
+import com.gem.support.persistent.model.*;
 import com.gem.support.persistent.repository.CompanyFeecbackRepository;
 import com.gem.support.persistent.repository.FeedbackRepository;
 import com.gem.support.persistent.repository.UserCompanyRepository;
@@ -11,6 +9,12 @@ import com.gem.support.service.dto.CompanyFeedbackDTO;
 import com.gem.support.service.dto.FeedbackDTO;
 import com.gem.support.service.exception.ResourceInvalidedException;
 import com.gem.support.service.exception.ResourceNotFoundException;
+import com.mysema.query.Tuple;
+import com.mysema.query.jpa.hibernate.HibernateQuery;
+import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.BooleanExpression;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -22,12 +26,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
 public class FeedbackServiceImpl implements FeedbackService {
 
     private static final Logger logger = LoggerFactory.getLogger(FeedbackServiceImpl.class);
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
 
     public FeedbackServiceImpl() {
     }
@@ -117,8 +126,20 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public File getFileToStatistic() {
-        return null;
+    public Page<FeedbackDTO> findAllByCompanyId(Pageable pageable,String id) {
+        System.out.println(id);
+        HibernateQuery query = new HibernateQuery(sessionFactory.openSession());
+        //BooleanExpression predicate = QUserCompany.userCompany.companyId.eq(id);
+        List<String> list = query.from(QUserCompany.userCompany).where(QUserCompany.userCompany.companyId.eq(id)).list(QUserCompany.userCompany.userId);
+
+         Predicate predicate = QFeedback.feedback.userId.in(list);
+        return feedbackRepository.findAll(predicate, pageable).map(source ->{
+            FeedbackDTO feedbackDTO = new FeedbackDTO();
+            BeanUtils.copyProperties(source, feedbackDTO);
+            UserCompany userCompany = userCompanyRepository.findByUserId(source.getUserId());
+            feedbackDTO.setUserInfo(new FeedbackDTO.UserInfo(userCompany.getUserId(),userCompany.getUsername(),userCompany.getAvatar(),userCompany.getCompanyId(),userCompany.getCompanyName()));
+            return feedbackDTO;
+        });
     }
 
 }
