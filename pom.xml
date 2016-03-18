@@ -141,11 +141,6 @@
             <artifactId>powermock-api-easymock</artifactId>
             <version>1.6.4</version>
         </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-release-with-junit-easymock-dependencies</artifactId>
-            <version>1.5.1</version>
-        </dependency>
 
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
@@ -159,23 +154,23 @@
             <version>0.8.1</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito</artifactId>
-            <version>1.6.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-            <version>1.6.4</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.0-b01</version>
         </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.14</version>
+        </dependency>
+
 
     </dependencies>
 

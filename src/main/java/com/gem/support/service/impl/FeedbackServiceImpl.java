@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.Date;
 
 @Service
@@ -27,6 +28,13 @@ import java.util.Date;
 public class FeedbackServiceImpl implements FeedbackService {
 
     private static final Logger logger = LoggerFactory.getLogger(FeedbackServiceImpl.class);
+
+    public FeedbackServiceImpl() {
+    }
+
+    public FeedbackServiceImpl(FeedbackRepository feedbackRepository) {
+        this.feedbackRepository = feedbackRepository;
+    }
 
     @Autowired
     private FeedbackRepository feedbackRepository;
@@ -106,6 +114,11 @@ public class FeedbackServiceImpl implements FeedbackService {
             BeanUtils.copyProperties(source,companyFeedbackDTO);
             return companyFeedbackDTO;
         });
+    }
+
+    @Override
+    public File getFileToStatistic() {
+        return null;
     }
 
 }

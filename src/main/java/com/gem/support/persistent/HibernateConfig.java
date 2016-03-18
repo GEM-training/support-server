@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.gem.support.persistent")
-@PropertySource(value = {"application.properties"})
+//@PropertySource(value = {"application.properties"})
 @EnableSpringDataWebSupport
 public class HibernateConfig {
 

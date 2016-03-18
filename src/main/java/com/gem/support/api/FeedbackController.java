@@ -6,12 +6,17 @@ import com.gem.support.service.FeedbackService;
 import com.gem.support.service.dto.CompanyFeedbackDTO;
 import com.gem.support.service.dto.FeedbackBriefDTO;
 import com.gem.support.service.dto.FeedbackDTO;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 
 @RestController
 @RequestMapping("/feedback")
@@ -64,5 +69,28 @@ public class FeedbackController {
     public Page<FeedbackDTO> search(@RequestParam(value = "q", defaultValue = "", required = false) String keyword) {
         return null;
     }
+
+    @RequestMapping(value = "/statistic")
+    public void statistic(final HttpServletRequest request, final HttpServletResponse response){
+
+
+        File file = new File (System.getProperty("user.dir") + "/data/data.txt");
+        try (InputStream fileInputStream = new FileInputStream(file);
+             OutputStream output = response.getOutputStream();) {
+
+            response.reset();
+
+            response.setContentType("application/octet-stream");
+            response.setContentLength((int) (file.length()));
+
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+
+            IOUtils.copyLarge(fileInputStream, output);
+            output.flush();
+        } catch (IOException e) {
+        }
+
+    }
+
 
 }
