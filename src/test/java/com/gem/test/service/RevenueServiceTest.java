@@ -26,9 +26,6 @@ public class RevenueServiceTest {
 
     @Mock
     InvoiceRepository invoiceRepository;
-    //co che cua mock
-    //muon test cac ham cua service. Mock tang duoi cua no(repository).
-    // set du lieu
 
     @Before
     public void setup() {
