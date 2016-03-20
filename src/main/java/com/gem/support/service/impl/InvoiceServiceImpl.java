@@ -8,14 +8,25 @@ import com.gem.support.service.InvoiceService;
 import com.gem.support.service.dto.InvoiceDTO;
 import com.gem.support.service.exception.ResourceNotFoundException;
 import com.mysema.query.types.expr.BooleanExpression;
+import org.jxls.common.Context;
+import org.jxls.util.JxlsHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -87,5 +98,31 @@ public class InvoiceServiceImpl implements InvoiceService {
             dto.setUserIncrement(invoiceRepository.getUserIncrement(source.getId()));
             return dto;
         });
+    }
+
+    @Override
+    public byte[] exportExcel(String companyId, Date from, Date to) {
+        BooleanExpression predicate = QInvoice.invoice.isNotNull();
+        if(companyId != null) {
+            predicate = predicate.and(QInvoice.invoice.companyId.eq(companyId));
+        }
+        if(from != null) {
+            predicate = predicate.and(QInvoice.invoice.issuedDate.goe(from));
+        }
+        if(to != null) {
+            predicate = predicate.and(QInvoice.invoice.issuedDate.loe(to));
+        }
+        Iterable<Invoice> invoices = invoiceRepository.findAll(predicate);
+
+        try (InputStream is = new ClassPathResource("forms/invoice_excel.xlsx").getInputStream()) {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            Context context = new Context();
+            context.putVar("invoices", invoices);
+            JxlsHelper.getInstance().processTemplate(is, os, context);
+            return os.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

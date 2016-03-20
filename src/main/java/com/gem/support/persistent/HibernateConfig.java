@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.gem.support.persistent")
-//@PropertySource(value = {"application.properties"})
+@PropertySource(value = {"application.properties"})
 @EnableSpringDataWebSupport
 public class HibernateConfig {
 
@@ -33,10 +33,10 @@ public class HibernateConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl("jdbc:postgresql://172.16.10.202:5432/support");
-        dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("postgres");
+        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
+        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
+        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
         return dataSource;
     }
 

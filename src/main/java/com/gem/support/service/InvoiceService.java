@@ -9,5 +9,6 @@ import java.util.Date;
 public interface InvoiceService extends BaseService<InvoiceDTO, String> {
 
     Page<InvoiceDTO> find(String companyId, Date from, Date to, Pageable pageable);
+    byte[] exportExcel(String companyId, Date from, Date to);
 
 }
