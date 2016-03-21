@@ -1,7 +1,6 @@
 package com.gem.support.service.impl;
 
 import com.gem.support.persistent.model.Invoice;
-import com.gem.support.persistent.model.QFeedback;
 import com.gem.support.persistent.model.QInvoice;
 import com.gem.support.persistent.repository.InvoiceRepository;
 import com.gem.support.service.InvoiceService;
@@ -19,14 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 @Service
 @Transactional
@@ -112,12 +106,15 @@ public class InvoiceServiceImpl implements InvoiceService {
         if(to != null) {
             predicate = predicate.and(QInvoice.invoice.issuedDate.loe(to));
         }
-        Iterable<Invoice> invoices = invoiceRepository.findAll(predicate);
+        Iterable<Invoice> invoices = invoiceRepository.findAll(predicate, QInvoice.invoice.issuedDate.asc());
 
         try (InputStream is = new ClassPathResource("forms/invoice_excel.xlsx").getInputStream()) {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             Context context = new Context();
             context.putVar("invoices", invoices);
+            context.putVar("companyId", companyId);
+            context.putVar("from", from == null ? null : from);
+            context.putVar("to", to == null ? null : to);
             JxlsHelper.getInstance().processTemplate(is, os, context);
             return os.toByteArray();
         } catch (IOException e) {
